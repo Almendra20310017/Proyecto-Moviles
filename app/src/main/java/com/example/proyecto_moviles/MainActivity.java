@@ -3,7 +3,9 @@ package com.example.proyecto_moviles;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
@@ -22,5 +24,11 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().hide();
 
         setContentView(R.layout.activity_main);
+    }
+
+    public void entrarLogin(View view) {
+        Intent login = new Intent(this, LoginActivity.class);
+        startActivity(login);
+
     }
 }
