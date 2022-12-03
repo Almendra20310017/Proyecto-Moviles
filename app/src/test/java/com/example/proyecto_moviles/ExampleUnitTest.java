@@ -1,4 +1,4 @@
-package com.example.bdbank;
+package com.example.proyecto_moviles;
 
 import org.junit.Test;
 
