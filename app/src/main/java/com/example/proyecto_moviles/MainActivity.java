@@ -17,7 +17,7 @@ public class MainActivity extends AppCompatActivity {
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         window.setStatusBarColor(ContextCompat.getColor(this, R.color.bluebd));
-        this.getWindow().setNavigationBarColor(getResources().getColor(R.color.bluebd));
+        this.getWindow().setNavigationBarColor(ContextCompat.getColor(this, R.color.bluebd));
 
         getSupportActionBar().hide();
 

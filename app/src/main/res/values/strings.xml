@@ -3,4 +3,6 @@
     <string name="bienvenida">Fusce vel fringilla tellus. Quisque vitae mauris purus. Aenean a mattis tortor. Sed tincidunt quis odio eu lacinia.</string>
     <string name="crearcuenta">Crear Cuenta</string>
     <string name="inicarsesion">Inicar Sesión</string>
+    <string name="correo">Correo electrónico</string>
+    <string name="contra">Constraseña</string>
 </resources>
