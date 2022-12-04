@@ -1,7 +1,9 @@
 package com.example.proyecto_moviles;
 
+import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -67,6 +69,16 @@ public class TransferFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_transfer, container, false);
+
+        AppCompatButton button = (AppCompatButton) view.findViewById(R.id.btnAgregarT);
+
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent contacto = new Intent(getActivity(), AddContactActivity.class);
+                startActivity(contacto);
+            }
+        });
 
         elements = new ArrayList<>();
         elements.add(new ListaContactos("Juan Ramírez Castañeda", "1236 7654 6548 89098654", "Juan", 0, false));

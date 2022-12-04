@@ -9,6 +9,9 @@
     <string name="iCorreo">ejemplo@ejemplo.com</string>
     <string name="iContra">Tu contraseña</string>
     <string name="iNombre">Nombres y apellidos</string>
+    <string name="iAlias">Nombre identificador</string>
+    <string name="iNoCuenta">Número de cuenta</string>
+    <string name="iTipoCuenta">Personal o empresarial</string>
     <string name="iRContra">Repetir contraseña</string>
     <string name="guardarS">Guardar Sesión</string>
     <string name="tutarjeta">Tu tarjeta</string>
@@ -24,4 +27,8 @@
     <string name="infoTaarjeta">Inforamción de la tarjeta</string>
     <string name="cerrarSesion">Cerrar sesión</string>
     <string name="nombre">Nombre completo</string>
+    <string name="alias">Alias</string>
+    <string name="cuenta">Cuenta</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

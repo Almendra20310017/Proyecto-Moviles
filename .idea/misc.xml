@@ -9,6 +9,7 @@
         <entry key="..\:/Users/ruben/AndroidStudioProjects/Proyecto-Moviles/app/src/main/res/drawable/ic_simple_blue_logo.xml" value="0.1105" />
         <entry key="..\:/Users/ruben/AndroidStudioProjects/Proyecto-Moviles/app/src/main/res/drawable/mid_radious_button.xml" value="0.213" />
         <entry key="..\:/Users/ruben/AndroidStudioProjects/Proyecto-Moviles/app/src/main/res/drawable/shadow_tarjeta.xml" value="0.2355" />
+        <entry key="..\:/Users/ruben/AndroidStudioProjects/Proyecto-Moviles/app/src/main/res/layout/activity_add_contact.xml" value="0.2" />
         <entry key="..\:/Users/ruben/AndroidStudioProjects/Proyecto-Moviles/app/src/main/res/layout/activity_contacts_list_view.xml" value="0.264" />
         <entry key="..\:/Users/ruben/AndroidStudioProjects/Proyecto-Moviles/app/src/main/res/layout/activity_home.xml" value="0.264" />
         <entry key="..\:/Users/ruben/AndroidStudioProjects/Proyecto-Moviles/app/src/main/res/layout/activity_login.xml" value="0.2" />
@@ -16,11 +17,14 @@
         <entry key="..\:/Users/ruben/AndroidStudioProjects/Proyecto-Moviles/app/src/main/res/layout/activity_register.xml" value="0.2" />
         <entry key="..\:/Users/ruben/AndroidStudioProjects/Proyecto-Moviles/app/src/main/res/layout/activity_user_contact.xml" value="0.152" />
         <entry key="..\:/Users/ruben/AndroidStudioProjects/Proyecto-Moviles/app/src/main/res/layout/fragment_contact.xml" value="0.264" />
+        <entry key="..\:/Users/ruben/AndroidStudioProjects/Proyecto-Moviles/app/src/main/res/layout/fragment_contact_form.xml" value="0.15625" />
         <entry key="..\:/Users/ruben/AndroidStudioProjects/Proyecto-Moviles/app/src/main/res/layout/fragment_home.xml" value="0.264" />
         <entry key="..\:/Users/ruben/AndroidStudioProjects/Proyecto-Moviles/app/src/main/res/layout/fragment_transfer.xml" value="0.264" />
         <entry key="..\:/Users/ruben/AndroidStudioProjects/Proyecto-Moviles/app/src/main/res/layout/lista_contactos.xml" value="0.264" />
         <entry key="..\:/Users/ruben/AndroidStudioProjects/Proyecto-Moviles/app/src/main/res/layout/lista_trasnferencias.xml" value="0.264" />
         <entry key="..\:/Users/ruben/AndroidStudioProjects/Proyecto-Moviles/app/src/main/res/menu/bottom_nav_menu.xml" value="0.253125" />
+        <entry key="..\:/Users/ruben/AndroidStudioProjects/Proyecto-Moviles/app/src/main/res/menu/guardar_menu.xml" value="0.253125" />
+        <entry key="..\:/Users/ruben/AndroidStudioProjects/Proyecto-Moviles/app/src/main/res/menu/popup_menu.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/ruben/AndroidStudioProjects/Proyecto-Moviles/app/src/main/res/menu/toolbar_menu.xml" value="0.264" />
       </map>
     </option>

@@ -5,10 +5,13 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import androidx.cardview.widget.CardView;
@@ -16,11 +19,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-public class ListaAdaptadorContactos extends RecyclerView.Adapter<ListaAdaptadorContactos.ViewHolder> {
+public class ListaAdaptadorContactos extends RecyclerView.Adapter<ListaAdaptadorContactos.ViewHolder> implements PopupMenu.OnMenuItemClickListener {
     private List<ListaContactos> mData;
     private LayoutInflater mInflater;
     private Context context;
     private int singleItem = -1;
+    private ImageButton imageButton;
 
     public ListaAdaptadorContactos(List<ListaContactos> itmList, Context context) {
         this.mInflater =LayoutInflater.from(context);
@@ -55,6 +59,22 @@ public class ListaAdaptadorContactos extends RecyclerView.Adapter<ListaAdaptador
         holder.bindData(mData.get(position));
     }
 
+    @Override
+    public boolean onMenuItemClick(MenuItem menuItem) {
+
+        switch (menuItem.getItemId()) {
+            case R.id.itmPopupEditar:
+                // Accion de editar
+                break;
+
+            case R.id.itmPopupEliminar:
+                // Accion de eliminar
+                break;
+        }
+
+        return false;
+    }
+
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
@@ -81,6 +101,15 @@ public class ListaAdaptadorContactos extends RecyclerView.Adapter<ListaAdaptador
                 @Override
                 public void onClick(View view) {
                     setSingleSelection(getAdapterPosition());
+                }
+            });
+
+            imageButton = itemView.findViewById(R.id.imageButton);
+
+            imageButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    showPopupMenu(view);
                 }
             });
         }
@@ -122,5 +151,12 @@ public class ListaAdaptadorContactos extends RecyclerView.Adapter<ListaAdaptador
         notifyItemChanged(singleItem);
         singleItem = adapterPosition;
         notifyItemChanged(singleItem);
+    }
+
+    private void showPopupMenu(View view) {
+        PopupMenu popupMenu = new PopupMenu(view.getContext(), view);
+        popupMenu.inflate(R.menu.popup_menu);
+        popupMenu.setOnMenuItemClickListener(this);
+        popupMenu.show();
     }
 }
