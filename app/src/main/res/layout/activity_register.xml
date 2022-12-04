@@ -6,47 +6,178 @@
     android:layout_height="match_parent"
     tools:context=".RegisterActivity">
 
-    <EditText
-        android:id="@+id/txtContra3"
+    <ScrollView
+        android:id="@+id/scrollView3"
         android:layout_width="match_parent"
-        android:layout_height="82dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="18dp"
-        android:layout_marginEnd="32dp"
-        android:background="@drawable/edittext_simple"
-        android:ems="10"
-        android:hint="@string/iContra"
-        android:inputType="textPassword"
-        android:paddingLeft="19dp"
-        android:paddingTop="20dp"
-        android:paddingRight="19dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtCorreo3" />
+        android:layout_height="0dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/btnRegistrar"
+        app:layout_constraintTop_toTopOf="parent">
 
-    <TextView
-        android:id="@+id/etqContra3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="18dp"
-        android:layout_marginTop="12dp"
-        android:fontFamily="@font/poppins_semibold"
-        android:text="@string/contra"
-        android:textColor="#000000"
-        android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="@+id/txtContra3"
-        app:layout_constraintTop_toTopOf="@+id/txtContra3" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-    <ImageView
-        android:id="@+id/imgLogoLogin3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="84dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/blue_logo" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+
+                <ImageView
+                    android:id="@+id/imgLogoLogin3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginTop="84dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:srcCompat="@drawable/blue_logo" />
+
+                <TextView
+                    android:id="@+id/etqRegistrar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginTop="24dp"
+                    android:fontFamily="@font/poppins_medium"
+                    android:text="@string/registrarusuario"
+                    android:textColor="#000000"
+                    android:textSize="37dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/imgLogoLogin3" />
+
+                <EditText
+                    android:id="@+id/txtNombreR"
+                    android:layout_width="match_parent"
+                    android:layout_height="82dp"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginEnd="32dp"
+                    android:background="@drawable/edittext_simple"
+                    android:ems="10"
+                    android:hint="@string/iNombre"
+                    android:inputType="textPersonName"
+                    android:paddingLeft="19dp"
+                    android:paddingTop="20dp"
+                    android:paddingRight="19dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/etqRegistrar" />
+
+                <TextView
+                    android:id="@+id/etqEmail3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="18dp"
+                    android:layout_marginTop="12dp"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:text="@string/nombre"
+                    android:textColor="#000000"
+                    android:textSize="16sp"
+                    app:layout_constraintStart_toStartOf="@+id/txtNombreR"
+                    app:layout_constraintTop_toTopOf="@+id/txtNombreR" />
+
+                <EditText
+                    android:id="@+id/txtCorreoER"
+                    android:layout_width="match_parent"
+                    android:layout_height="82dp"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginTop="18dp"
+                    android:layout_marginEnd="32dp"
+                    android:background="@drawable/edittext_simple"
+                    android:ems="10"
+                    android:hint="@string/iCorreo"
+                    android:inputType="textEmailAddress"
+                    android:paddingLeft="19dp"
+                    android:paddingTop="20dp"
+                    android:paddingRight="19dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/txtNombreR" />
+
+                <TextView
+                    android:id="@+id/etqContra3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="18dp"
+                    android:layout_marginTop="12dp"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:text="@string/correo"
+                    android:textColor="#000000"
+                    android:textSize="16sp"
+                    app:layout_constraintStart_toStartOf="@+id/txtCorreoER"
+                    app:layout_constraintTop_toTopOf="@+id/txtCorreoER" />
+
+                <EditText
+                    android:id="@+id/txtContraR"
+                    android:layout_width="match_parent"
+                    android:layout_height="82dp"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginTop="18dp"
+                    android:layout_marginEnd="32dp"
+                    android:background="@drawable/edittext_simple"
+                    android:ems="10"
+                    android:hint="@string/iContra"
+                    android:inputType="textPassword"
+                    android:paddingLeft="19dp"
+                    android:paddingTop="20dp"
+                    android:paddingRight="19dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/txtCorreoER" />
+
+                <TextView
+                    android:id="@+id/etqContra4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="18dp"
+                    android:layout_marginTop="12dp"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:text="@string/contra"
+                    android:textColor="#000000"
+                    android:textSize="16sp"
+                    app:layout_constraintStart_toStartOf="@+id/txtContraR"
+                    app:layout_constraintTop_toTopOf="@+id/txtContraR" />
+
+                <EditText
+                    android:id="@+id/txtRepetirContraR"
+                    android:layout_width="match_parent"
+                    android:layout_height="82dp"
+                    android:layout_marginStart="32dp"
+                    android:layout_marginTop="18dp"
+                    android:layout_marginEnd="32dp"
+                    android:background="@drawable/edittext_simple"
+                    android:ems="10"
+                    android:hint="@string/iRContra"
+                    android:inputType="textPassword"
+                    android:paddingLeft="19dp"
+                    android:paddingTop="20dp"
+                    android:paddingRight="19dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/txtContraR" />
+
+                <TextView
+                    android:id="@+id/etqContra2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="18dp"
+                    android:layout_marginTop="12dp"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:text="@string/contra"
+                    android:textColor="#000000"
+                    android:textSize="16sp"
+                    app:layout_constraintStart_toStartOf="@+id/txtRepetirContraR"
+                    app:layout_constraintTop_toTopOf="@+id/txtRepetirContraR" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </LinearLayout>
+    </ScrollView>
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnRegistrar"
@@ -64,50 +195,5 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
-
-    <TextView
-        android:id="@+id/etqRegistrar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="24dp"
-        android:fontFamily="@font/poppins_medium"
-        android:text="@string/registrarusuario"
-        android:textColor="#000000"
-        android:textSize="37dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imgLogoLogin3" />
-
-    <EditText
-        android:id="@+id/txtCorreo3"
-        android:layout_width="match_parent"
-        android:layout_height="82dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="32dp"
-        android:background="@drawable/edittext_simple"
-        android:ems="10"
-        android:hint="@string/iCorreo"
-        android:inputType="textEmailAddress"
-        android:paddingLeft="19dp"
-        android:paddingTop="20dp"
-        android:paddingRight="19dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etqRegistrar" />
-
-    <TextView
-        android:id="@+id/etqEmail3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="18dp"
-        android:layout_marginTop="12dp"
-        android:fontFamily="@font/poppins_semibold"
-        android:text="@string/correo"
-        android:textColor="#000000"
-        android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="@+id/txtCorreo3"
-        app:layout_constraintTop_toTopOf="@+id/txtCorreo3" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -11,7 +11,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.cardview.widget.CardView;
-import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
@@ -39,6 +38,8 @@ public class ListaAdaptadorTransferencia extends RecyclerView.Adapter<ListaAdapt
 
     @Override
     public void onBindViewHolder(final ListaAdaptadorTransferencia.ViewHolder holder, final int position) {
+
+        ListaTransferencia lstTransferencias = mData.get(position);
         holder.bindData(mData.get(position));
     }
 
@@ -76,4 +77,5 @@ public class ListaAdaptadorTransferencia extends RecyclerView.Adapter<ListaAdapt
             valor.setText(item.getValor());
         }
     }
+
 }

@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -63,7 +64,7 @@ public class HomeActivity extends AppCompatActivity {
                     break;
 
                 case R.id.itmContactos:
-
+                    remplazarFragment(new ContactFragment());
                     break;
             }
 
@@ -90,7 +91,8 @@ public class HomeActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.itmUser:
-                Toast.makeText(this, "Hola", Toast.LENGTH_SHORT);
+                Intent user = new Intent(this, UserContactActivity.class);
+                startActivity(user);
                 break;
         }
 

@@ -15,10 +15,10 @@ import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link TransferFragment#newInstance} factory method to
+ * Use the {@link ContactFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class TransferFragment extends Fragment {
+public class ContactFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -29,7 +29,7 @@ public class TransferFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public TransferFragment() {
+    public ContactFragment() {
         // Required empty public constructor
     }
 
@@ -39,11 +39,11 @@ public class TransferFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment TransferFragment.
+     * @return A new instance of fragment ContactFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static TransferFragment newInstance(String param1, String param2) {
-        TransferFragment fragment = new TransferFragment();
+    public static ContactFragment newInstance(String param1, String param2) {
+        ContactFragment fragment = new ContactFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -65,8 +65,15 @@ public class TransferFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_transfer, container, false);
+        View view = inflater.inflate(R.layout.fragment_contact, container, false);
+
+        String blue = "#F8F7FE";
+        String green = "#F8FDF7";
+        String trans = "trasnferir";
+        String get = "recibir";
+
+        String transferText = "Transferencia";
+        String getText = "Recibiste dinero";
 
         elements = new ArrayList<>();
         elements.add(new ListaContactos("Juan Ramírez Castañeda", "1236 7654 6548 89098654", "Juan", 0, false));

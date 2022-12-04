@@ -43,6 +43,7 @@
         android:layout_marginBottom="16dp"
         android:background="@drawable/white_button"
         android:fontFamily="@font/poppins_medium"
+        android:onClick="registrarUsuario"
         android:stateListAnimator="@null"
         android:text="@string/crearcuenta"
         android:textColor="@color/bluebd"

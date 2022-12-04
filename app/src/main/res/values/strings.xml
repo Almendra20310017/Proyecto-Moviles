@@ -8,6 +8,8 @@
     <string name="contra">Constraseña</string>
     <string name="iCorreo">ejemplo@ejemplo.com</string>
     <string name="iContra">Tu contraseña</string>
+    <string name="iNombre">Nombres y apellidos</string>
+    <string name="iRContra">Repetir contraseña</string>
     <string name="guardarS">Guardar Sesión</string>
     <string name="tutarjeta">Tu tarjeta</string>
     <string name="balance">Balance</string>
@@ -21,4 +23,5 @@
     <string name="agregar">Agregar</string>
     <string name="infoTaarjeta">Inforamción de la tarjeta</string>
     <string name="cerrarSesion">Cerrar sesión</string>
+    <string name="nombre">Nombre completo</string>
 </resources>
