@@ -3,6 +3,13 @@
     <string name="bienvenida">Fusce vel fringilla tellus. Quisque vitae mauris purus. Aenean a mattis tortor. Sed tincidunt quis odio eu lacinia.</string>
     <string name="crearcuenta">Crear Cuenta</string>
     <string name="inicarsesion">Inicar Sesión</string>
+    <string name="registrarusuario">Registrar Usuario</string>
     <string name="correo">Correo electrónico</string>
     <string name="contra">Constraseña</string>
+    <string name="iCorreo">ejemplo@ejemplo.com</string>
+    <string name="iContra">Tu contraseña</string>
+    <string name="guardarS">Guardar Sesión</string>
+    <string name="tutarjeta">Tu tarjeta</string>
+    <string name="balance">Balance</string>
+    <string name="listaTransferencias">Lista de transferencias</string>
 </resources>

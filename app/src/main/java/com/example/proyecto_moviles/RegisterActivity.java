@@ -3,7 +3,6 @@ package com.example.proyecto_moviles;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -11,7 +10,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
-public class LoginActivity extends AppCompatActivity {
+public class RegisterActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,12 +29,6 @@ public class LoginActivity extends AppCompatActivity {
                             View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         }
 
-        setContentView(R.layout.activity_login);
-    }
-
-    public void entrarInicio(View view) {
-        Intent inicio = new Intent(this, HomeActivity.class);
-        startActivity(inicio);
-        finish();
+        setContentView(R.layout.activity_register);
     }
 }

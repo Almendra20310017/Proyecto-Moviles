@@ -20,8 +20,8 @@ public class MainActivity extends AppCompatActivity {
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         window.setStatusBarColor(ContextCompat.getColor(this, R.color.bluebd));
         this.getWindow().setNavigationBarColor(ContextCompat.getColor(this, R.color.bluebd));
-
-        getSupportActionBar().hide();
+        //getActionBar().setDisplayHomeAsUpEnabled(true);
+        //getSupportActionBar().hide();
 
         setContentView(R.layout.activity_main);
     }

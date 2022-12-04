@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:title="Inicio"
+        android:icon="@drawable/ic_home"
+        android:id="@+id/itmInicio"
+        />
+    <item android:title="Trasferir"
+        android:icon="@drawable/ic_transfer"
+        android:id="@+id/itmTrasferir"
+        />
+    <item android:title="Contactos"
+        android:icon="@drawable/ic_contacts"
+        android:id="@+id/itmContactos"
+        />
+</menu>
