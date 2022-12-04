@@ -59,7 +59,7 @@ public class HomeActivity extends AppCompatActivity {
                     break;
 
                 case R.id.itmTrasferir:
-
+                    remplazarFragment(new TransferFragment());
                     break;
 
                 case R.id.itmContactos:

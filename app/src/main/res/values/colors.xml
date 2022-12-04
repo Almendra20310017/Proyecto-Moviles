@@ -12,4 +12,8 @@
     <color name="blueLight">#F8F7FE</color>
     <color name="grenLight">#F8FDF7</color>
     <color name="grayLight">#7E7E7E</color>
+    <color name="cardColorGray">#F1F1F1</color>
+    <color name="redLight">#FBE9E9</color>
+    <color name="red">#D92628</color>
+    <color name="cardText">#292929</color>
 </resources>

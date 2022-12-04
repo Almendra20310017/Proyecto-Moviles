@@ -12,4 +12,13 @@
     <string name="tutarjeta">Tu tarjeta</string>
     <string name="balance">Balance</string>
     <string name="listaTransferencias">Lista de transferencias</string>
+    <string name="transferencias">Transferencias</string>
+    <string name="infoTransferencias">Elige alguien de tu lista de contactos e ingresa la cantidad que quieras trasnferir.</string>
+    <string name="contactos">Contactos</string>
+    <string name="infoContactos">Gestiona tu lista de contactos y edita sus datos.</string>
+    <string name="monto">Monto</string>
+    <string name="dineroTrans">Dinero a transferir</string>
+    <string name="agregar">Agregar</string>
+    <string name="infoTaarjeta">Inforamción de la tarjeta</string>
+    <string name="cerrarSesion">Cerrar sesión</string>
 </resources>
