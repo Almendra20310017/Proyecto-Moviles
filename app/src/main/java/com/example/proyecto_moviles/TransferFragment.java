@@ -1,6 +1,7 @@
 package com.example.proyecto_moviles;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.appcompat.widget.AppCompatButton;
@@ -11,7 +12,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -69,23 +76,9 @@ public class TransferFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_transfer, container, false);
-
-        AppCompatButton button = (AppCompatButton) view.findViewById(R.id.btnAgregarT);
-
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent contacto = new Intent(getActivity(), AddContactActivity.class);
-                startActivity(contacto);
-            }
-        });
-
         elements = new ArrayList<>();
-        elements.add(new ListaContactos("Juan Ramírez Castañeda", "1236 7654 6548 89098654", "Juan", 0, false));
-        elements.add(new ListaContactos("Alberta Palacios Dávila", "7656 5433 4567 89765676", "Alberta", 0, false));
-        elements.add(new ListaContactos("Raúl Valdez Aguirre", "0113 41167 7787 54076546", "Mobiliaria S. A. de C. V.", 1, false));
-        elements.add(new ListaContactos("Julian Pérez Ramírez", "7877 6755 8987 44543211", "Julian", 0, false));
-        elements.add(new ListaContactos("Danel Campos Salazar", "8769 0112 9987 98787656", "Limpieza S. A. de C. V.", 1, false));
+
+        abrirArchivo();
 
         ListaAdaptadorContactos listAdapter = new ListaAdaptadorContactos(elements, this.getContext());
         RecyclerView recyclerView = view.findViewById(R.id.rContactosT);
@@ -94,5 +87,55 @@ public class TransferFragment extends Fragment {
         recyclerView.setAdapter(listAdapter);
 
         return view;
+    }
+
+    public void abrirArchivo() {
+
+
+        String archivos[] = getActivity().fileList();
+
+        SharedPreferences preferencias = getActivity().getSharedPreferences("user.dat", getActivity().MODE_PRIVATE);
+
+        String correo = preferencias.getString("correo", "correo@ejemplo.com");
+
+        if (existeArchivo(archivos, "contactos.txt")) {
+            System.out.println("Hola");
+            try {
+                InputStreamReader archivoInterno = new InputStreamReader(
+                        getActivity().openFileInput("contactos.txt"));
+                BufferedReader leerArchivo = new BufferedReader(archivoInterno);
+
+                String linea = leerArchivo.readLine();
+
+                String splitLines[];
+
+                while(linea != null) {
+                    splitLines = linea.split("\\s+");
+                    //System.out.println(archivos[0] + " " + splitLines[1] + " " + splitLines[2] + " " + splitLines[3] + " " + splitLines[4]);
+                    if (correo.equals(splitLines[0]))
+                        elements.add(new ListaContactos(splitLines[0], splitLines[1], splitLines[2], splitLines[3], Integer.parseInt(splitLines[4]), false));
+
+                    linea = leerArchivo.readLine();
+                }
+
+                leerArchivo.close();
+
+            } catch (IOException e) {
+                Toast.makeText(getActivity(), "Error al leer el archivo.",
+                        Toast.LENGTH_SHORT).show();
+                e.printStackTrace();
+            }
+        } else {
+            Toast.makeText(getActivity(), "No hay usuarios. Agregue uno.",
+                    Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private boolean existeArchivo(String[] archivos, String s) {
+        for(int i = 0; i < archivos.length; i++)
+            if (s.equals(archivos[i])) {
+                return true;}
+
+        return false;
     }
 }

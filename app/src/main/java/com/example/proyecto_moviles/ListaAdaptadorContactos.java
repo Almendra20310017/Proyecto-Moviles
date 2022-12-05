@@ -1,6 +1,8 @@
 package com.example.proyecto_moviles;
 
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
@@ -13,10 +15,17 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.Serializable;
 import java.util.List;
 
 public class ListaAdaptadorContactos extends RecyclerView.Adapter<ListaAdaptadorContactos.ViewHolder> implements PopupMenu.OnMenuItemClickListener {
@@ -25,6 +34,7 @@ public class ListaAdaptadorContactos extends RecyclerView.Adapter<ListaAdaptador
     private Context context;
     private int singleItem = -1;
     private ImageButton imageButton;
+    private int popMenuPosition = -1;
 
     public ListaAdaptadorContactos(List<ListaContactos> itmList, Context context) {
         this.mInflater =LayoutInflater.from(context);
@@ -64,15 +74,36 @@ public class ListaAdaptadorContactos extends RecyclerView.Adapter<ListaAdaptador
 
         switch (menuItem.getItemId()) {
             case R.id.itmPopupEditar:
-                // Accion de editar
+                if (popMenuPosition != -1 && popMenuPosition <= mData.size()) {
+                    // Accion de editar
+                    Intent modificar = new Intent(context, AddContactActivity.class);
+                    modificar.putExtra("contactos", (Serializable) mData);
+                    modificar.putExtra("position", popMenuPosition);
+                    context.startActivity(modificar);
+                } else {
+                    Toast.makeText(context, "No se pudo editar.", Toast.LENGTH_SHORT).show();
+                }
                 break;
 
             case R.id.itmPopupEliminar:
-                // Accion de eliminar
+                if (popMenuPosition != -1 && popMenuPosition <= mData.size()) {
+                    mData.remove(popMenuPosition);
+                    guardarContactos();
+                    notifyItemRemoved(popMenuPosition);
+                    notifyItemRangeChanged(popMenuPosition, mData.size());
+                    popMenuPosition = -1;
+                } else {
+                    Toast.makeText(context, "No se pudo eliminar.", Toast.LENGTH_SHORT).show();
+                }
                 break;
         }
 
         return false;
+    }
+
+    public void updateRecycler(int position) {
+        notifyItemChanged(position);
+        notifyItemRangeChanged(position, mData.size());
     }
 
 
@@ -109,7 +140,7 @@ public class ListaAdaptadorContactos extends RecyclerView.Adapter<ListaAdaptador
             imageButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    showPopupMenu(view);
+                    showPopupMenu(view, getAdapterPosition());
                 }
             });
         }
@@ -153,10 +184,40 @@ public class ListaAdaptadorContactos extends RecyclerView.Adapter<ListaAdaptador
         notifyItemChanged(singleItem);
     }
 
-    private void showPopupMenu(View view) {
+    private void showPopupMenu(View view, int position) {
         PopupMenu popupMenu = new PopupMenu(view.getContext(), view);
         popupMenu.inflate(R.menu.popup_menu);
+        popMenuPosition = position;
         popupMenu.setOnMenuItemClickListener(this);
         popupMenu.show();
+    }
+
+    public void guardarContactos() {
+        try {
+            OutputStreamWriter archivoInterno = new OutputStreamWriter(
+                    context.openFileOutput("contactos.txt",
+                            Context.MODE_PRIVATE));
+
+            String strGuardar = "";
+
+            for(int i = 0; i < mData.size(); i++) {
+                strGuardar += mData.get(i).getCorreo()    + " " +
+                        mData.get(i).getNombre()        + " " +
+                        mData.get(i).getCuenta()       + " " +
+                        mData.get(i).getAlias()       + " " +
+                        mData.get(i).getTipoCuenta() + "\n";
+            }
+
+
+            archivoInterno.write(strGuardar);
+
+            archivoInterno.flush();
+            archivoInterno.close();
+
+            Toast.makeText(context, "Contacto eliminado correctamente.", Toast.LENGTH_SHORT).show();
+        } catch (IOException e) {
+            Toast.makeText(context, "Error al escribr en el archivo.",
+                    Toast.LENGTH_SHORT).show();
+        }
     }
 }

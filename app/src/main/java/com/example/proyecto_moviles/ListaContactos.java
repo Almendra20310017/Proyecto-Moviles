@@ -1,18 +1,30 @@
 package com.example.proyecto_moviles;
 
-public class ListaContactos {
+import java.io.Serializable;
+
+public class ListaContactos implements Serializable {
     public String nombre;
     public String cuenta;
     public String alias;
     public int tipoCuenta;
     public boolean isSelected;
+    public String correo;
 
-    public ListaContactos(String nombre, String cuenta, String alias, int tipoCuenta, boolean isSelected) {
+    public ListaContactos(String correo, String nombre, String cuenta, String alias, int tipoCuenta, boolean isSelected) {
+        this.correo = correo;
         this.nombre = nombre;
         this.cuenta = cuenta;
         this.alias = alias;
         this.tipoCuenta = tipoCuenta;
         this.isSelected = isSelected;
+    }
+
+    public String getCorreo() {
+        return correo;
+    }
+
+    public void setCorreo(String correo) {
+        this.correo = correo;
     }
 
     public boolean isSelected() { return isSelected; }
