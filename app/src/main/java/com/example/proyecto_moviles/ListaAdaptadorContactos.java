@@ -194,8 +194,12 @@ public class ListaAdaptadorContactos extends RecyclerView.Adapter<ListaAdaptador
 
     public void guardarContactos() {
         try {
+            SharedPreferences preferencias = context.getSharedPreferences("user.dat", Context.MODE_PRIVATE);
+
+            String correo = preferencias.getString("correo", "correo@ejemplo.com");
+
             OutputStreamWriter archivoInterno = new OutputStreamWriter(
-                    context.openFileOutput("contactos.txt",
+                    context.openFileOutput("contactos_" + correo + ".txt",
                             Context.MODE_PRIVATE));
 
             String strGuardar = "";

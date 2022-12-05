@@ -57,7 +57,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         try {
             OutputStreamWriter archivoInterno = new OutputStreamWriter(
-                    openFileOutput("usuarios.txt",
+                    openFileOutput("usuarios_" + txtCorreoNC.getText().toString() + ".txt",
                             Context.MODE_APPEND));
 
 

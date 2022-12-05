@@ -93,14 +93,14 @@ public class AddContactActivity extends AppCompatActivity {
     }
 
     public void registrarContacto() {
+        SharedPreferences preferencias = getSharedPreferences("user.dat", MODE_PRIVATE);
+
+        String correo = preferencias.getString("correo", "correo@ejemplo.com");
+
         try {
             OutputStreamWriter archivoInterno = new OutputStreamWriter(
-                    openFileOutput("contactos.txt",
+                    openFileOutput("contactos_"  + correo +  ".txt",
                             Context.MODE_APPEND));
-
-            SharedPreferences preferencias = getSharedPreferences("user.dat", MODE_PRIVATE);
-
-            String correo = preferencias.getString("correo", "correo@ejemplo.com");
 
             archivoInterno.write(
                     correo    + " " +
@@ -126,13 +126,13 @@ public class AddContactActivity extends AppCompatActivity {
 
     public void modificarContacto() {
         try {
-            OutputStreamWriter archivoInterno = new OutputStreamWriter(
-                    this.openFileOutput("contactos.txt",
-                            Context.MODE_PRIVATE));
-
             SharedPreferences preferencias = getSharedPreferences("user.dat", MODE_PRIVATE);
 
             String correo = preferencias.getString("correo", "correo@ejemplo.com");
+
+            OutputStreamWriter archivoInterno = new OutputStreamWriter(
+                    this.openFileOutput("contactos_"  + correo +  ".txt",
+                            Context.MODE_PRIVATE));
 
             String strGuardar = "";
             mData.get(position).setCorreo(correo);

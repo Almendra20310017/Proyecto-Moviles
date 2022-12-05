@@ -94,19 +94,17 @@ public class LoginActivity extends AppCompatActivity {
 
         users = new ArrayList<>();
 
-        if (existeArchivo(archivos, "usuarios.txt")) {
+        if (existeArchivo(archivos, "usuarios_"  + txtCorreo.getText().toString() +  ".txt")) {
             try {
                 InputStreamReader archivoInterno = new InputStreamReader(
-                        openFileInput("usuarios.txt"));
+                        openFileInput("usuarios_"  + txtCorreo.getText().toString() + ".txt"));
                 BufferedReader leerArchivo = new BufferedReader(archivoInterno);
 
                 String linea = leerArchivo.readLine();
 
-                //String textoLeido = "";
                 String splitLines[];
 
                 while(linea != null) {
-                    //textoLeido = linea;
                     splitLines = linea.split("\\s+");
 
                     users.add(new Usuario(splitLines[0], splitLines[1], splitLines[2], Double.parseDouble(splitLines[3]), Boolean.parseBoolean(splitLines[4])));

@@ -98,11 +98,11 @@ public class TransferFragment extends Fragment {
 
         String correo = preferencias.getString("correo", "correo@ejemplo.com");
 
-        if (existeArchivo(archivos, "contactos.txt")) {
+        if (existeArchivo(archivos, "contactos_" + correo + ".txt")) {
             System.out.println("Hola");
             try {
                 InputStreamReader archivoInterno = new InputStreamReader(
-                        getActivity().openFileInput("contactos.txt"));
+                        getActivity().openFileInput("contactos_" + correo + ".txt"));
                 BufferedReader leerArchivo = new BufferedReader(archivoInterno);
 
                 String linea = leerArchivo.readLine();
@@ -111,9 +111,8 @@ public class TransferFragment extends Fragment {
 
                 while(linea != null) {
                     splitLines = linea.split("\\s+");
-                    //System.out.println(archivos[0] + " " + splitLines[1] + " " + splitLines[2] + " " + splitLines[3] + " " + splitLines[4]);
-                    if (correo.equals(splitLines[0]))
-                        elements.add(new ListaContactos(splitLines[0], splitLines[1], splitLines[2], splitLines[3], Integer.parseInt(splitLines[4]), false));
+
+                    elements.add(new ListaContactos(splitLines[0], splitLines[1], splitLines[2], splitLines[3], Integer.parseInt(splitLines[4]), false));
 
                     linea = leerArchivo.readLine();
                 }

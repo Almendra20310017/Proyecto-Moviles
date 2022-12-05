@@ -119,14 +119,14 @@ public class ContactFragment extends Fragment {
 
         SharedPreferences preferencias = getActivity().getSharedPreferences("user.dat", getActivity().MODE_PRIVATE);
 
-        String correo = preferencias.getString("correo", "Sin correo@ejemplo.com");
+        String correo = preferencias.getString("correo", "correo@ejemplo.com");
 
         // Comprobar si existe el archivo, de no se así se crea el archivo
-        if (!existeArchivo(archivos, "contactos.txt")) {
+        if (!existeArchivo(archivos, "contactos_" + correo + ".txt")) {
             OutputStreamWriter archivoInternoC = null;
             try {
                 archivoInternoC = new OutputStreamWriter(
-                        getActivity().openFileOutput("contactos.txt",
+                        getActivity().openFileOutput("contactos_" + correo + ".txt",
                                 getActivity().MODE_PRIVATE));
 
                 archivoInternoC.write("");
@@ -144,13 +144,10 @@ public class ContactFragment extends Fragment {
             }
         }
 
-        Toast.makeText(this.getContext(), "Hola", Toast.LENGTH_LONG);
-
-        if (existeArchivo(archivos, "contactos.txt")) {
-            System.out.println("Hola");
+        if (existeArchivo(archivos, "contactos_" + correo + ".txt")) {
             try {
                 InputStreamReader archivoInterno = new InputStreamReader(
-                        getActivity().openFileInput("contactos.txt"));
+                        getActivity().openFileInput("contactos_" + correo + ".txt"));
                 BufferedReader leerArchivo = new BufferedReader(archivoInterno);
 
                 String linea = leerArchivo.readLine();
@@ -159,9 +156,7 @@ public class ContactFragment extends Fragment {
 
                 while(linea != null) {
                     splitLines = linea.split("\\s+");
-                    //System.out.println(archivos[0] + " " + splitLines[1] + " " + splitLines[2] + " " + splitLines[3] + " " + splitLines[4]);
-                    if (correo.equals(splitLines[0]))
-                        elements.add(new ListaContactos(splitLines[0], splitLines[1], splitLines[2], splitLines[3], Integer.parseInt(splitLines[4]), false));
+                    elements.add(new ListaContactos(splitLines[0], splitLines[1], splitLines[2], splitLines[3], Integer.parseInt(splitLines[4]), false));
 
                     linea = leerArchivo.readLine();
                 }
