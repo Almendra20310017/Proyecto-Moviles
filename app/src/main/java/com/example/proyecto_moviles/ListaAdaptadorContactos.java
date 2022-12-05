@@ -42,6 +42,11 @@ public class ListaAdaptadorContactos extends RecyclerView.Adapter<ListaAdaptador
         this.mData = itmList;
     }
 
+
+    public int getSingleItem() {
+        return singleItem;
+    }
+
     @Override
     public int getItemCount() { return mData.size(); }
 
@@ -113,7 +118,7 @@ public class ListaAdaptadorContactos extends RecyclerView.Adapter<ListaAdaptador
 
         CardView cardColor;
 
-        TextView nombre, alias, cuenta;
+        TextView nombre, alias, correo;
 
         LinearLayout rowItem;
 
@@ -123,7 +128,7 @@ public class ListaAdaptadorContactos extends RecyclerView.Adapter<ListaAdaptador
             iconContactType = itemView.findViewById(R.id.icnContactType);
             alias = itemView.findViewById(R.id.txtAliasC);
             nombre = itemView.findViewById(R.id.txtNombreC);
-            cuenta = itemView.findViewById(R.id.txtNoCuentaC);
+            correo = itemView.findViewById(R.id.txtCorreoC);
             cardColor = itemView.findViewById(R.id.cardImageC);
 
             this.rowItem = itemView.findViewById(R.id.layoutContacts);
@@ -172,7 +177,7 @@ public class ListaAdaptadorContactos extends RecyclerView.Adapter<ListaAdaptador
 
             alias.setText(item.getAlias());
             nombre.setText(item.getNombre());
-            cuenta.setText(item.getCuenta());
+            correo.setText(item.getCorreo());
         }
     }
 
@@ -207,11 +212,9 @@ public class ListaAdaptadorContactos extends RecyclerView.Adapter<ListaAdaptador
             for(int i = 0; i < mData.size(); i++) {
                 strGuardar += mData.get(i).getCorreo()    + " " +
                         mData.get(i).getNombre()        + " " +
-                        mData.get(i).getCuenta()       + " " +
                         mData.get(i).getAlias()       + " " +
                         mData.get(i).getTipoCuenta() + "\n";
             }
-
 
             archivoInterno.write(strGuardar);
 

@@ -1,5 +1,6 @@
 package com.example.proyecto_moviles;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import java.io.BufferedReader;
@@ -71,6 +73,13 @@ public class TransferFragment extends Fragment {
         }
     }
 
+    private ListaAdaptadorContactos listAdapter;
+    private RecyclerView recyclerView;
+    private SharedPreferences preferencias;
+    private String correo;
+    private EditText txtMontoT;
+    private AppCompatButton btnTransferirT;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -80,13 +89,105 @@ public class TransferFragment extends Fragment {
 
         abrirArchivo();
 
-        ListaAdaptadorContactos listAdapter = new ListaAdaptadorContactos(elements, this.getContext());
-        RecyclerView recyclerView = view.findViewById(R.id.rContactosT);
+        listAdapter = new ListaAdaptadorContactos(elements, this.getContext());
+        recyclerView = view.findViewById(R.id.rContactosT);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setAdapter(listAdapter);
 
+        txtMontoT = view.findViewById(R.id.txtMontoT);
+        btnTransferirT = view.findViewById(R.id.btnTransferirT);
+
+        btnTransferirT.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                transferirDinero();
+            }
+        });
+
         return view;
+    }
+
+    public void transferirDinero() {
+        try {
+            String archivos[] = getActivity().fileList();
+            String cuentaATransferir = elements.get(listAdapter.getSingleItem()).getCorreo();
+
+            if (existeArchivo(archivos, "usuarios_" + cuentaATransferir + ".txt") && existeArchivo(archivos, "transferencias_" + cuentaATransferir + ".txt")) {
+
+                ////  Agrega dinero a la cuenta que se le quiere transferir ////
+                InputStreamReader archivoInterno = null;
+
+                archivoInterno = new InputStreamReader(
+                        getActivity().openFileInput("usuarios_"  + cuentaATransferir + ".txt"));
+
+                BufferedReader leerArchivo = new BufferedReader(archivoInterno);
+
+                String linea = leerArchivo.readLine();
+                String splitUsr[] = linea.split("\\s+");
+
+                float monto = Float.parseFloat(txtMontoT.getText().toString());
+                float balanceCuentaATransferir = Float.parseFloat(splitUsr[3]) + monto;
+
+                linea = splitUsr[0] + " " + splitUsr[1] + " " + splitUsr[2] + " " + splitUsr[3] + " " + balanceCuentaATransferir;
+
+                //  Guardar dinero en la cuenta del otro usuario
+                OutputStreamWriter archivoOtraCuenta = null;
+                archivoOtraCuenta = new OutputStreamWriter(
+                        getActivity().openFileOutput("usuarios_" + cuentaATransferir + ".txt",
+                                Context.MODE_PRIVATE));
+
+
+                archivoOtraCuenta.write(linea);
+
+                archivoOtraCuenta.flush();
+                archivoOtraCuenta.close();
+                leerArchivo.close();
+
+                //// Crear mensaje de recibo en la otra cuenta
+                archivoOtraCuenta = null;
+                archivoOtraCuenta = new OutputStreamWriter(
+                        getActivity().openFileOutput("transferencias_" + cuentaATransferir + ".txt",
+                                Context.MODE_APPEND));
+
+                String blue = "#F8F7FE";
+                String green = "#F8FDF7";
+                String trans = "trasnferir";
+                String get = "recibir";
+
+                String transferText = "Transferencia";
+                String getText = "Recibistedinero";
+
+                String subTrans = "Transferistealcontacto";
+
+                archivoOtraCuenta.write(
+                        green + " " + getText + " " + getText + splitUsr[1] + " " + get + " " + monto
+                );
+
+                archivoOtraCuenta.flush();
+                archivoOtraCuenta.close();
+
+                ////    Crear mensaje de transferencia en el archivo de la cuenta principal
+                OutputStreamWriter archivoCuentaPrincipal;
+                archivoCuentaPrincipal = new OutputStreamWriter(
+                        getActivity().openFileOutput("transferencias_" + correo + ".txt",
+                                Context.MODE_APPEND));
+
+                archivoCuentaPrincipal.write(
+                        blue + " " + transferText + " " + subTrans + splitUsr[1] + " " + trans + " " + monto
+                );
+
+                archivoCuentaPrincipal.flush();
+                archivoCuentaPrincipal.close();
+
+            } else {
+                Toast.makeText(getActivity(), "La cuenta a transferir no existe.", Toast.LENGTH_SHORT);
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void abrirArchivo() {
@@ -94,12 +195,10 @@ public class TransferFragment extends Fragment {
 
         String archivos[] = getActivity().fileList();
 
-        SharedPreferences preferencias = getActivity().getSharedPreferences("user.dat", getActivity().MODE_PRIVATE);
-
-        String correo = preferencias.getString("correo", "correo@ejemplo.com");
+        preferencias = getActivity().getSharedPreferences("user.dat", getActivity().MODE_PRIVATE);
+        correo = preferencias.getString("correo", "correo@ejemplo.com");
 
         if (existeArchivo(archivos, "contactos_" + correo + ".txt")) {
-            System.out.println("Hola");
             try {
                 InputStreamReader archivoInterno = new InputStreamReader(
                         getActivity().openFileInput("contactos_" + correo + ".txt"));
@@ -112,7 +211,7 @@ public class TransferFragment extends Fragment {
                 while(linea != null) {
                     splitLines = linea.split("\\s+");
 
-                    elements.add(new ListaContactos(splitLines[0], splitLines[1], splitLines[2], splitLines[3], Integer.parseInt(splitLines[4]), false));
+                    elements.add(new ListaContactos(splitLines[0], splitLines[1], splitLines[2], Integer.parseInt(splitLines[3]), false));
 
                     linea = leerArchivo.readLine();
                 }

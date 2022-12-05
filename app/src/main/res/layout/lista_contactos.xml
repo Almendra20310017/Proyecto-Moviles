@@ -75,7 +75,7 @@
                     android:textSize="12sp" />
 
                 <TextView
-                    android:id="@+id/txtNoCuentaC"
+                    android:id="@+id/txtCorreoC"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins"

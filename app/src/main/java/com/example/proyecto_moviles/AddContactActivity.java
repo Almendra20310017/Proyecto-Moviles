@@ -27,7 +27,7 @@ import java.util.List;
 public class AddContactActivity extends AppCompatActivity {
 
     private Spinner spTipoCuentaNC;
-    private EditText txtAliasNC, txtNombreNC, txtNoCuentaNC;
+    private EditText txtAliasNC, txtNombreNC, txtCorreoNC;
     private List<ListaContactos> mData;
     private int position;
 
@@ -56,7 +56,7 @@ public class AddContactActivity extends AppCompatActivity {
         spTipoCuentaNC = findViewById(R.id.spTipoCunetaNC);
         txtAliasNC = findViewById(R.id.txtAliasNC);
         txtNombreNC = findViewById(R.id.txtNombreNC);
-        txtNoCuentaNC = findViewById(R.id.txtNoCuentaNC);
+        txtCorreoNC = findViewById(R.id.txtCorreoNC);
 
         String [] menu = { "Personal", "Empresarial"};
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, menu);
@@ -103,9 +103,8 @@ public class AddContactActivity extends AppCompatActivity {
                             Context.MODE_APPEND));
 
             archivoInterno.write(
-                    correo    + " " +
+                    txtCorreoNC.getText().toString()    + " " +
                             txtNombreNC.getText().toString()        + " " +
-                            txtNoCuentaNC.getText().toString()        + " " +
                             txtAliasNC.getText().toString()        + " " +
                             spTipoCuentaNC.getSelectedItemPosition() + "\n"
             );
@@ -135,16 +134,14 @@ public class AddContactActivity extends AppCompatActivity {
                             Context.MODE_PRIVATE));
 
             String strGuardar = "";
-            mData.get(position).setCorreo(correo);
+            mData.get(position).setCorreo(txtCorreoNC.getText().toString());
             mData.get(position).setNombre(txtNombreNC.getText().toString());
-            mData.get(position).setCuenta(txtNoCuentaNC.getText().toString());
             mData.get(position).setAlias(txtAliasNC.getText().toString());
             mData.get(position).setTipoCuenta(spTipoCuentaNC.getSelectedItemPosition());
 
             for(int i = 0; i < mData.size(); i++) {
                 strGuardar += mData.get(i).getCorreo()    + " " +
                         mData.get(i).getNombre()        + " " +
-                        mData.get(i).getCuenta()       + " " +
                         mData.get(i).getAlias()       + " " +
                         mData.get(i).getTipoCuenta() + "\n";
             }

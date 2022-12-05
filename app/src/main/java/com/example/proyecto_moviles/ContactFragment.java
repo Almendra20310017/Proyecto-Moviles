@@ -121,29 +121,6 @@ public class ContactFragment extends Fragment {
 
         String correo = preferencias.getString("correo", "correo@ejemplo.com");
 
-        // Comprobar si existe el archivo, de no se así se crea el archivo
-        if (!existeArchivo(archivos, "contactos_" + correo + ".txt")) {
-            OutputStreamWriter archivoInternoC = null;
-            try {
-                archivoInternoC = new OutputStreamWriter(
-                        getActivity().openFileOutput("contactos_" + correo + ".txt",
-                                getActivity().MODE_PRIVATE));
-
-                archivoInternoC.write("");
-
-                archivoInternoC.flush();
-                archivoInternoC.close();
-
-                Toast.makeText(getActivity(), "Lista de contactos creada.", Toast.LENGTH_SHORT).show();
-            } catch (FileNotFoundException e) {
-                Toast.makeText(getActivity(), "Error al leer el archivo.",
-                        Toast.LENGTH_SHORT).show();
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
         if (existeArchivo(archivos, "contactos_" + correo + ".txt")) {
             try {
                 InputStreamReader archivoInterno = new InputStreamReader(
@@ -156,7 +133,7 @@ public class ContactFragment extends Fragment {
 
                 while(linea != null) {
                     splitLines = linea.split("\\s+");
-                    elements.add(new ListaContactos(splitLines[0], splitLines[1], splitLines[2], splitLines[3], Integer.parseInt(splitLines[4]), false));
+                    elements.add(new ListaContactos(splitLines[0], splitLines[1], splitLines[2], Integer.parseInt(splitLines[3]), false));
 
                     linea = leerArchivo.readLine();
                 }

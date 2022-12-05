@@ -136,7 +136,7 @@
                         app:layout_constraintTop_toBottomOf="@+id/rContactosT" />
 
                     <EditText
-                        android:id="@+id/txtCorreo2"
+                        android:id="@+id/txtMontoT"
                         android:layout_width="match_parent"
                         android:layout_height="82dp"
                         android:layout_marginStart="32dp"
@@ -163,11 +163,11 @@
                         android:text="@string/dineroTrans"
                         android:textColor="#000000"
                         android:textSize="16sp"
-                        app:layout_constraintStart_toStartOf="@+id/txtCorreo2"
-                        app:layout_constraintTop_toTopOf="@+id/txtCorreo2" />
+                        app:layout_constraintStart_toStartOf="@+id/txtMontoT"
+                        app:layout_constraintTop_toTopOf="@+id/txtMontoT" />
 
                     <androidx.appcompat.widget.AppCompatButton
-                        android:id="@+id/btnTransferir"
+                        android:id="@+id/btnTransferirT"
                         android:layout_width="match_parent"
                         android:layout_height="74dp"
                         android:layout_marginStart="16dp"
@@ -175,14 +175,14 @@
                         android:layout_marginEnd="16dp"
                         android:background="@drawable/blue_button"
                         android:fontFamily="@font/poppins_medium"
-                        android:onClick="entrarInicio"
+                        android:onClick="transferirDinero"
                         android:stateListAnimator="@null"
                         android:text="Transferir"
                         android:textColor="@color/white"
-                        android:textSize="24dp"
+                        android:textSize="24sp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/txtCorreo2" />
+                        app:layout_constraintTop_toBottomOf="@+id/txtMontoT" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -41,7 +41,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         txtNombreNC = findViewById(R.id.txtAliasNC);
         txtCorreoNC = findViewById(R.id.txtNombreNC);
-        txtContraNC = findViewById(R.id.txtNoCuentaNC);
+        txtContraNC = findViewById(R.id.txtCorreoNC);
         txtRepetirContraNC = findViewById(R.id.txtRepetirContraNC);
     }
 
@@ -55,31 +55,66 @@ public class RegisterActivity extends AppCompatActivity {
             return;
         }
 
+        String archivos[] = this.fileList();
+
         try {
-            OutputStreamWriter archivoInterno = new OutputStreamWriter(
-                    openFileOutput("usuarios_" + txtCorreoNC.getText().toString() + ".txt",
-                            Context.MODE_APPEND));
+            if (!existeArchivo(archivos, "usuarios_" + txtCorreoNC.getText() + ".txt")) {
+                // Crear archivo de usuario
+                OutputStreamWriter archivoInterno = new OutputStreamWriter(
+                        openFileOutput("usuarios_" + txtCorreoNC.getText().toString() + ".txt",
+                                Context.MODE_APPEND));
 
 
+                archivoInterno.write(
+                        txtCorreoNC.getText().toString() + " " +
+                                txtNombreNC.getText().toString() + " " +
+                                txtContraNC.getText().toString() + " " + "0 false\n"
+                );
 
-            archivoInterno.write(
-                    txtCorreoNC.getText().toString()    + " " +
-                    txtNombreNC.getText().toString()        + " " +
-                    txtContraNC.getText().toString()        + " " + "0 false\n"
-            );
+                archivoInterno.flush();
+                archivoInterno.close();
 
-            archivoInterno.flush();
-            archivoInterno.close();
+                // Crear lista de contactos
+                archivoInterno = new OutputStreamWriter(
+                        this.openFileOutput("contactos_" + txtCorreoNC.getText() + ".txt",
+                                this.MODE_PRIVATE));
 
-            Toast.makeText(this, "Registro guardado.", Toast.LENGTH_SHORT).show();
+                archivoInterno.write("");
 
-            Intent login = new Intent(this, LoginActivity.class);
-            startActivity(login);
-            finish();
+                archivoInterno.flush();
+                archivoInterno.close();
+
+                // Crear lista de transferencias
+                archivoInterno = new OutputStreamWriter(
+                        this.openFileOutput("transferencias_" + txtCorreoNC.getText() + ".txt",
+                                this.MODE_PRIVATE));
+
+                archivoInterno.write("");
+
+                archivoInterno.flush();
+                archivoInterno.close();
+
+                Toast.makeText(this, "Registro guardado.", Toast.LENGTH_SHORT).show();
+
+                Intent login = new Intent(this, LoginActivity.class);
+                startActivity(login);
+                finish();
+            } else {
+                Toast.makeText(this, "El usuario ya existe. Ingrese otro correo.",
+                        Toast.LENGTH_SHORT).show();
+            }
+
         } catch (IOException e) {
             Toast.makeText(this, "Error al escribr em el archivo.",
                     Toast.LENGTH_SHORT).show();
         }
+    }
 
+    private boolean existeArchivo(String[] archivos, String s) {
+        for(int i = 0; i < archivos.length; i++)
+            if (s.equals(archivos[i])) {
+                return true;}
+
+        return false;
     }
 }

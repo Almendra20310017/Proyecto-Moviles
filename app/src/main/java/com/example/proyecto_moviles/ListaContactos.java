@@ -4,16 +4,14 @@ import java.io.Serializable;
 
 public class ListaContactos implements Serializable {
     public String nombre;
-    public String cuenta;
     public String alias;
     public int tipoCuenta;
     public boolean isSelected;
     public String correo;
 
-    public ListaContactos(String correo, String nombre, String cuenta, String alias, int tipoCuenta, boolean isSelected) {
+    public ListaContactos(String correo, String nombre, String alias, int tipoCuenta, boolean isSelected) {
         this.correo = correo;
         this.nombre = nombre;
-        this.cuenta = cuenta;
         this.alias = alias;
         this.tipoCuenta = tipoCuenta;
         this.isSelected = isSelected;
@@ -39,14 +37,6 @@ public class ListaContactos implements Serializable {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
-    }
-
-    public String getCuenta() {
-        return cuenta;
-    }
-
-    public void setCuenta(String cuenta) {
-        this.cuenta = cuenta;
     }
 
     public String getAlias() {
