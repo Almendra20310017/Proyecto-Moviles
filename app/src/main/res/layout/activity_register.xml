@@ -184,7 +184,7 @@
                     android:background="@drawable/edittext_simple"
                     android:ems="10"
                     android:hint="Dinero con el que desea abrir la cuenta"
-                    android:inputType="textPassword"
+                    android:inputType="numberDecimal"
                     android:paddingLeft="19dp"
                     android:paddingTop="20dp"
                     android:paddingRight="19dp"
