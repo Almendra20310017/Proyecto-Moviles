@@ -66,6 +66,13 @@ public class AddContactActivity extends AppCompatActivity {
         mData = (List<ListaContactos>) getIntent().getSerializableExtra("contactos");
         position = (int) getIntent().getSerializableExtra("position");
 
+        if (mData != null) {
+            spTipoCuentaNC.setSelection(mData.get(position).tipoCuenta);
+            txtAliasNC.setText(mData.get(position).getAlias());
+            txtNombreNC.setText(mData.get(position).getNombre());
+            txtCorreoNC.setText(mData.get(position).getCorreo());
+        }
+
     }
 
     @Override
@@ -97,69 +104,91 @@ public class AddContactActivity extends AppCompatActivity {
 
         String correo = preferencias.getString("correo", "correo@ejemplo.com");
 
-        try {
-            OutputStreamWriter archivoInterno = new OutputStreamWriter(
-                    openFileOutput("contactos_"  + correo +  ".txt",
-                            Context.MODE_APPEND));
+        String archivos[] = this.fileList();
 
-            archivoInterno.write(
-                    txtCorreoNC.getText().toString()    + " " +
-                            txtNombreNC.getText().toString()        + " " +
-                            txtAliasNC.getText().toString()        + " " +
-                            spTipoCuentaNC.getSelectedItemPosition() + "\n"
-            );
+        if (existeArchivo(archivos, "contactos_" + txtCorreoNC.getText().toString() + ".txt")) {
+            try {
+                OutputStreamWriter archivoInterno = new OutputStreamWriter(
+                        openFileOutput("contactos_"  + correo +  ".txt",
+                                Context.MODE_APPEND));
 
-            archivoInterno.flush();
-            archivoInterno.close();
+                archivoInterno.write(
+                        txtCorreoNC.getText().toString()    + "|" +
+                                txtNombreNC.getText().toString()        + "|" +
+                                txtAliasNC.getText().toString()        + "|" +
+                                spTipoCuentaNC.getSelectedItemPosition() + "\n"
+                );
 
-            Toast.makeText(this, "Contacto guardado.", Toast.LENGTH_SHORT).show();
+                archivoInterno.flush();
+                archivoInterno.close();
 
-            Intent intent = new Intent();
-            setResult(RESULT_OK, intent);
-            finish();
-        } catch (IOException e) {
-            Toast.makeText(this, "Error al escribr en el archivo.",
-                    Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Contacto guardado.", Toast.LENGTH_SHORT).show();
+
+                Intent intent = new Intent();
+                setResult(RESULT_OK, intent);
+                finish();
+            } catch (IOException e) {
+                Toast.makeText(this, "Error al escribr en el archivo.",
+                        Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            Toast.makeText(AddContactActivity.this, "No existe la cuenta. Verifique la información.", Toast.LENGTH_SHORT);
+            return;
         }
     }
 
     public void modificarContacto() {
-        try {
-            SharedPreferences preferencias = getSharedPreferences("user.dat", MODE_PRIVATE);
+        SharedPreferences preferencias = getSharedPreferences("user.dat", MODE_PRIVATE);
 
-            String correo = preferencias.getString("correo", "correo@ejemplo.com");
+        String correo = preferencias.getString("correo", "correo@ejemplo.com");
 
-            OutputStreamWriter archivoInterno = new OutputStreamWriter(
-                    this.openFileOutput("contactos_"  + correo +  ".txt",
-                            Context.MODE_PRIVATE));
+        String archivos[] = this.fileList();
 
-            String strGuardar = "";
-            mData.get(position).setCorreo(txtCorreoNC.getText().toString());
-            mData.get(position).setNombre(txtNombreNC.getText().toString());
-            mData.get(position).setAlias(txtAliasNC.getText().toString());
-            mData.get(position).setTipoCuenta(spTipoCuentaNC.getSelectedItemPosition());
+        if (existeArchivo(archivos, "contactos_" + txtCorreoNC.getText().toString() + ".txt")) {
+            try {
+                OutputStreamWriter archivoInterno = new OutputStreamWriter(
+                        this.openFileOutput("contactos_"  + correo +  ".txt",
+                                Context.MODE_PRIVATE));
 
-            for(int i = 0; i < mData.size(); i++) {
-                strGuardar += mData.get(i).getCorreo()    + " " +
-                        mData.get(i).getNombre()        + " " +
-                        mData.get(i).getAlias()       + " " +
-                        mData.get(i).getTipoCuenta() + "\n";
+                String strGuardar = "";
+                mData.get(position).setCorreo(txtCorreoNC.getText().toString());
+                mData.get(position).setNombre(txtNombreNC.getText().toString());
+                mData.get(position).setAlias(txtAliasNC.getText().toString());
+                mData.get(position).setTipoCuenta(spTipoCuentaNC.getSelectedItemPosition());
+
+                for(int i = 0; i < mData.size(); i++) {
+                    strGuardar += mData.get(i).getCorreo()    + "|" +
+                            mData.get(i).getNombre()        + "|" +
+                            mData.get(i).getAlias()       + "|" +
+                            mData.get(i).getTipoCuenta() + "\n";
+                }
+
+
+                archivoInterno.write(strGuardar);
+
+                archivoInterno.flush();
+                archivoInterno.close();
+
+                Intent intent = new Intent(this, HomeActivity.class);
+                startActivity(intent);
+                finish();
+
+                Toast.makeText(this, "Contacto modificado correctamente.", Toast.LENGTH_SHORT).show();
+            } catch (IOException e) {
+                Toast.makeText(this, "Error al escribr en el archivo.",
+                        Toast.LENGTH_SHORT).show();
             }
-
-
-            archivoInterno.write(strGuardar);
-
-            archivoInterno.flush();
-            archivoInterno.close();
-
-            Intent intent = new Intent(this, HomeActivity.class);
-            startActivity(intent);
-            finish();
-
-            Toast.makeText(this, "Contacto modificado correctamente.", Toast.LENGTH_SHORT).show();
-        } catch (IOException e) {
-            Toast.makeText(this, "Error al escribr en el archivo.",
-                    Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "No existe la cuenta. Verifique la información.", Toast.LENGTH_SHORT);
+            return;
         }
+    }
+
+    private boolean existeArchivo(String[] archivos, String s) {
+        for(int i = 0; i < archivos.length; i++)
+            if (s.equals(archivos[i])) {
+                return true;}
+
+        return false;
     }
 }

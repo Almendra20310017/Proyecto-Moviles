@@ -131,14 +131,16 @@ public class ContactFragment extends Fragment {
 
                 String splitLines[];
 
+
                 while(linea != null) {
-                    splitLines = linea.split("\\s+");
+                    splitLines = linea.split("\\|");
                     elements.add(new ListaContactos(splitLines[0], splitLines[1], splitLines[2], Integer.parseInt(splitLines[3]), false));
 
                     linea = leerArchivo.readLine();
                 }
 
                 leerArchivo.close();
+                archivoInterno.close();
 
             } catch (IOException e) {
                 Toast.makeText(getActivity(), "Error al leer el archivo.",

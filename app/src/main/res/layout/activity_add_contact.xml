@@ -121,7 +121,7 @@
                     android:background="@drawable/edittext_simple"
                     android:ems="10"
                     android:hint="@string/iCorreo"
-                    android:inputType="textPassword"
+                    android:inputType="textEmailAddress"
                     android:paddingLeft="19dp"
                     android:paddingTop="20dp"
                     android:paddingRight="19dp"

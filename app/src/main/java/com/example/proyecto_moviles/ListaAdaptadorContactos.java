@@ -156,16 +156,13 @@ public class ListaAdaptadorContactos extends RecyclerView.Adapter<ListaAdaptador
 
             switch (item.getTipoCuenta()) {
                 case 0:
-                    uri = "@drawable/ic_lista_trasnferir";
-                    color = "#EFF6FF";
+                    uri = "@drawable/ic_lista_personal";
+                    color = "#EBFCFB";
                     break;
+
                 case 1:
-                    uri = "@drawable/ic_lista_trasnferir";
-                    color = "#EFF6FF";
-                    break;
-                case 2:
-                    uri = "@drawable/ic_lista_trasnferir";
-                    color = "#EFF6FF";
+                    uri = "@drawable/ic_lista_empresarial";
+                    color = "#FCF7EF";
                     break;
             }
 
@@ -210,9 +207,9 @@ public class ListaAdaptadorContactos extends RecyclerView.Adapter<ListaAdaptador
             String strGuardar = "";
 
             for(int i = 0; i < mData.size(); i++) {
-                strGuardar += mData.get(i).getCorreo()    + " " +
-                        mData.get(i).getNombre()        + " " +
-                        mData.get(i).getAlias()       + " " +
+                strGuardar += mData.get(i).getCorreo()    + "|" +
+                        mData.get(i).getNombre()        + "|" +
+                        mData.get(i).getAlias()       + "|" +
                         mData.get(i).getTipoCuenta() + "\n";
             }
 

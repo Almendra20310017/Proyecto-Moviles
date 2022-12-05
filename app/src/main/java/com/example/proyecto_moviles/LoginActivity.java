@@ -105,14 +105,16 @@ public class LoginActivity extends AppCompatActivity {
                 String splitLines[];
 
                 while(linea != null) {
-                    splitLines = linea.split("\\s+");
+                    splitLines = linea.split("\\|");
 
-                    users.add(new Usuario(splitLines[0], splitLines[1], splitLines[2], Double.parseDouble(splitLines[3]), Boolean.parseBoolean(splitLines[4])));
+                    System.out.println(Arrays.toString(splitLines));
+
+                    users.add(new Usuario(splitLines[0], splitLines[1], splitLines[2], Float.parseFloat(splitLines[3]), Boolean.parseBoolean(splitLines[4])));
                     linea = leerArchivo.readLine();
                 }
 
                 leerArchivo.close();
-
+                archivoInterno.close();
             } catch (IOException e) {
                 Toast.makeText(this, "Error al leer el archivo.",
                         Toast.LENGTH_SHORT).show();

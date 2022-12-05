@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -113,7 +114,49 @@ public class TransferFragment extends Fragment {
             String archivos[] = getActivity().fileList();
             String cuentaATransferir = elements.get(listAdapter.getSingleItem()).getCorreo();
 
+            preferencias = getActivity().getSharedPreferences("user.dat", getActivity().MODE_PRIVATE);
+            correo = preferencias.getString("correo", "correo@ejemplo.com");
+
             if (existeArchivo(archivos, "usuarios_" + cuentaATransferir + ".txt") && existeArchivo(archivos, "transferencias_" + cuentaATransferir + ".txt")) {
+
+                ////    Quitamos dinero de la cuenta principal y revisamos que tiene el dinero suficiente para transferir
+                float monto = Float.parseFloat(txtMontoT.getText().toString());
+
+                InputStreamReader archivoCuentaPrincipalU = null;
+                archivoCuentaPrincipalU = new InputStreamReader(
+                        getActivity().openFileInput("usuarios_"  + correo + ".txt"));
+
+                BufferedReader leerArchivoU = new BufferedReader(archivoCuentaPrincipalU);
+
+                String lineaU = leerArchivoU.readLine();
+                String splitUsuario[] = lineaU.split("\\|");
+
+                if (monto > Float.parseFloat(splitUsuario[3])) {
+                    Toast.makeText(getActivity(), "No puede transferir más del dinero que tiene.", Toast.LENGTH_SHORT);
+                    archivoCuentaPrincipalU.close();
+                    return;
+                }
+
+                float quitarDinero = Float.parseFloat(splitUsuario[3]) - monto;
+
+                System.out.println(quitarDinero);
+
+                archivoCuentaPrincipalU.close();
+                leerArchivoU.close();
+
+                //  Descontar el dinero
+
+                OutputStreamWriter archivoCuentaPrincipal = null;
+                archivoCuentaPrincipal = new OutputStreamWriter(
+                        getActivity().openFileOutput("usuarios_" + correo + ".txt",
+                                getActivity().MODE_PRIVATE));
+
+                archivoCuentaPrincipal.write(
+                        splitUsuario[0] + "|" + splitUsuario[1] + "|" + splitUsuario[2] + "|" + quitarDinero + "|" + splitUsuario[4]
+                );
+
+                archivoCuentaPrincipal.flush();
+                archivoCuentaPrincipal.close();
 
                 ////  Agrega dinero a la cuenta que se le quiere transferir ////
                 InputStreamReader archivoInterno = null;
@@ -124,31 +167,34 @@ public class TransferFragment extends Fragment {
                 BufferedReader leerArchivo = new BufferedReader(archivoInterno);
 
                 String linea = leerArchivo.readLine();
-                String splitUsr[] = linea.split("\\s+");
+                String splitUsr[] = linea.split("\\|");
 
-                float monto = Float.parseFloat(txtMontoT.getText().toString());
+                System.out.print(Arrays.toString(splitUsr));
+
                 float balanceCuentaATransferir = Float.parseFloat(splitUsr[3]) + monto;
 
-                linea = splitUsr[0] + " " + splitUsr[1] + " " + splitUsr[2] + " " + splitUsr[3] + " " + balanceCuentaATransferir;
+                String nlinea = splitUsr[0] + "|" + splitUsr[1] + "|" + splitUsr[2] + "|" + balanceCuentaATransferir + "|" + splitUsr[4];
+
+                leerArchivo.close();
+                archivoInterno.close();
 
                 //  Guardar dinero en la cuenta del otro usuario
                 OutputStreamWriter archivoOtraCuenta = null;
                 archivoOtraCuenta = new OutputStreamWriter(
                         getActivity().openFileOutput("usuarios_" + cuentaATransferir + ".txt",
-                                Context.MODE_PRIVATE));
+                                getActivity().MODE_PRIVATE));
 
 
-                archivoOtraCuenta.write(linea);
+                archivoOtraCuenta.write(nlinea);
 
                 archivoOtraCuenta.flush();
                 archivoOtraCuenta.close();
-                leerArchivo.close();
 
                 //// Crear mensaje de recibo en la otra cuenta
                 archivoOtraCuenta = null;
                 archivoOtraCuenta = new OutputStreamWriter(
                         getActivity().openFileOutput("transferencias_" + cuentaATransferir + ".txt",
-                                Context.MODE_APPEND));
+                                getActivity().MODE_APPEND));
 
                 String blue = "#F8F7FE";
                 String green = "#F8FDF7";
@@ -156,25 +202,25 @@ public class TransferFragment extends Fragment {
                 String get = "recibir";
 
                 String transferText = "Transferencia";
-                String getText = "Recibistedinero";
+                String getText = "Recibiste dinero";
 
-                String subTrans = "Transferistealcontacto";
+                String subTrans = "Transferiste al contacto ";
 
                 archivoOtraCuenta.write(
-                        green + " " + getText + " " + getText + splitUsr[1] + " " + get + " " + monto
+                        green + "|" + getText + "|" + getText + splitUsr[1] + "|" + get + "|" + monto + "\n"
                 );
 
                 archivoOtraCuenta.flush();
                 archivoOtraCuenta.close();
 
                 ////    Crear mensaje de transferencia en el archivo de la cuenta principal
-                OutputStreamWriter archivoCuentaPrincipal;
+                archivoCuentaPrincipal = null;
                 archivoCuentaPrincipal = new OutputStreamWriter(
                         getActivity().openFileOutput("transferencias_" + correo + ".txt",
-                                Context.MODE_APPEND));
+                                getActivity().MODE_APPEND));
 
                 archivoCuentaPrincipal.write(
-                        blue + " " + transferText + " " + subTrans + splitUsr[1] + " " + trans + " " + monto
+                        blue + "|" + transferText + "|" + subTrans + splitUsr[1] + "|" + trans + "|" + monto + "\n"
                 );
 
                 archivoCuentaPrincipal.flush();
@@ -209,7 +255,7 @@ public class TransferFragment extends Fragment {
                 String splitLines[];
 
                 while(linea != null) {
-                    splitLines = linea.split("\\s+");
+                    splitLines = linea.split("\\|");
 
                     elements.add(new ListaContactos(splitLines[0], splitLines[1], splitLines[2], Integer.parseInt(splitLines[3]), false));
 

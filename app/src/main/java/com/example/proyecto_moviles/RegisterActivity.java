@@ -18,7 +18,7 @@ import java.io.OutputStreamWriter;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    private EditText txtNombreNC, txtCorreoNC, txtContraNC, txtRepetirContraNC;
+    private EditText txtNombreNC, txtCorreoNC, txtContraNC, txtRepetirContraNC, txtDineroNC;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +43,7 @@ public class RegisterActivity extends AppCompatActivity {
         txtCorreoNC = findViewById(R.id.txtNombreNC);
         txtContraNC = findViewById(R.id.txtCorreoNC);
         txtRepetirContraNC = findViewById(R.id.txtRepetirContraNC);
+        txtDineroNC = findViewById(R.id.txtDineroNC);
     }
 
     public void registrarUsuario(View view) {
@@ -64,11 +65,17 @@ public class RegisterActivity extends AppCompatActivity {
                         openFileOutput("usuarios_" + txtCorreoNC.getText().toString() + ".txt",
                                 Context.MODE_APPEND));
 
+                float dinero = Float.parseFloat(txtDineroNC.getText().toString());
+
+                if (dinero <= 999) {
+                    Toast.makeText(this, "El dinero debe ser mayor a  $1,000.00", Toast.LENGTH_SHORT);
+                }
 
                 archivoInterno.write(
-                        txtCorreoNC.getText().toString() + " " +
-                                txtNombreNC.getText().toString() + " " +
-                                txtContraNC.getText().toString() + " " + "0 false\n"
+                        txtCorreoNC.getText().toString() + "|" +
+                                txtNombreNC.getText().toString() + "|" +
+                                txtContraNC.getText().toString() + "|" +
+                                dinero + "|" + "false\n"
                 );
 
                 archivoInterno.flush();

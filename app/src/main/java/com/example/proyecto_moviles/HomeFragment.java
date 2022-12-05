@@ -11,7 +11,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import org.w3c.dom.Text;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -19,6 +22,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -59,7 +63,10 @@ public class HomeFragment extends Fragment {
         return fragment;
     }
 
-    List<ListaTransferencia> elements;
+    private List<ListaTransferencia> elements;
+    private SharedPreferences preferencias;
+    private String correo;
+    private TextView etqBalance;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -75,29 +82,13 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
-
-        String blue = "#F8F7FE";
-        String green = "#F8FDF7";
-        String trans = "trasnferir";
-        String get = "recibir";
-
-        String transferText = "Transferencia";
-        String getText = "Recibiste dinero";
+        etqBalance = view.findViewById(R.id.etqBalance);
 
         elements = new ArrayList<>();
+        preferencias = getActivity().getSharedPreferences("user.dat", getActivity().MODE_PRIVATE);
+        obtenerBalance();
         abrirArchivo();
-        /*elements.add(new ListaTransferencia(blue, transferText, "Transferiste al contacto Jhon", trans, "$2,000"));
-        elements.add(new ListaTransferencia(green, getText, "Recibiste una transferencia de Jhon", get, "$20,000"));
-        elements.add(new ListaTransferencia(green, getText, "Recibiste una transferencia de José", get, "$2,000"));
-        elements.add(new ListaTransferencia(blue, transferText, "Transferiste al contacto Jhon", trans, "$2,000"));
-        elements.add(new ListaTransferencia(green, getText, "Recibiste una transferencia de José", get, "$20,000"));
-        elements.add(new ListaTransferencia(blue, transferText, "Transferiste al contacto Jhon", trans, "$2,000"));
-        elements.add(new ListaTransferencia(green, getText, "Recibiste una transferencia de Jhon", get, "$20,000"));
-        elements.add(new ListaTransferencia(green, getText, "Recibiste una transferencia de José", get, "$2,000"));
-        elements.add(new ListaTransferencia(blue, transferText, "Transferiste al contacto Jhon", trans, "$2,000"));
-        elements.add(new ListaTransferencia(green, getText, "Recibiste una transferencia de José", get, "$20,000"));*/
 
         ListaAdaptadorTransferencia listAdapter = new ListaAdaptadorTransferencia(elements, this.getContext());
         RecyclerView recyclerView = view.findViewById(R.id.rTransferencias);
@@ -108,14 +99,45 @@ public class HomeFragment extends Fragment {
         return view;
     }
 
-    public void abrirArchivo() {
-
-
+    public void obtenerBalance() {
         String archivos[] = getActivity().fileList();
 
-        SharedPreferences preferencias = getActivity().getSharedPreferences("user.dat", getActivity().MODE_PRIVATE);
+        correo = preferencias.getString("correo", "correo@ejemplo.com");
 
-        String correo = preferencias.getString("correo", "correo@ejemplo.com");
+        if (existeArchivo(archivos, "usuarios_" + correo + ".txt")) {
+            try {
+                InputStreamReader archivoInterno = new InputStreamReader(
+                        getActivity().openFileInput("usuarios_" + correo + ".txt"));
+                BufferedReader leerArchivo = new BufferedReader(archivoInterno);
+
+                String linea = leerArchivo.readLine();
+
+                String splitLines[];
+
+                if(linea != null) {
+                    splitLines = linea.split("\\|");
+                    etqBalance.setText("$" + splitLines[3]);
+                }
+
+
+                leerArchivo.close();
+                archivoInterno.close();
+
+            } catch (IOException e) {
+                Toast.makeText(getActivity(), "Error al leer el archivo.",
+                        Toast.LENGTH_SHORT).show();
+                e.printStackTrace();
+            }
+        } else {
+            Toast.makeText(getActivity(), "No hay usuarios. Agregue uno.",
+                    Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void abrirArchivo() {
+        String archivos[] = getActivity().fileList();
+
+        correo = preferencias.getString("correo", "correo@ejemplo.com");
 
         if (existeArchivo(archivos, "transferencias_" + correo + ".txt")) {
             try {
@@ -128,12 +150,13 @@ public class HomeFragment extends Fragment {
                 String splitLines[];
 
                 while(linea != null) {
-                    splitLines = linea.split("\\s+");
+                    splitLines = linea.split("\\|");
                     elements.add(new ListaTransferencia(splitLines[0], splitLines[1], splitLines[2], splitLines[3], splitLines[4]));
                     linea = leerArchivo.readLine();
                 }
 
                 leerArchivo.close();
+                archivoInterno.close();
 
             } catch (IOException e) {
                 Toast.makeText(getActivity(), "Error al leer el archivo.",

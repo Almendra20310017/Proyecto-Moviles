@@ -65,8 +65,6 @@ public class ListaAdaptadorTransferencia extends RecyclerView.Adapter<ListaAdapt
         }
 
         void bindData(final ListaTransferencia item) {
-            //String color, String titulo, String subtitulo, String img, String valor
-            System.out.println(item.getColor() + " " + item.getTitulo() + " " + item.getSubtitulo() + " " + item.getImg() + " " + item.getValor());
 
             String uri = "@drawable/ic_lista_" + item.getImg();
             int imageResource = context.getResources().getIdentifier(uri, null, context.getPackageName());
